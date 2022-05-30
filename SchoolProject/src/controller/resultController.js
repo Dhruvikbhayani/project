@@ -60,7 +60,6 @@ const getAllResult = async (req, res) => {
 
 }
 
-
 const getResult = async (req, res) => {
     try {
         if (['faculty', 'student'].includes(req.user.roleId.roleName)) {
