@@ -169,7 +169,7 @@ const removeResult = async (req, res) => {
     try {
         req.body.updatedBy = req.user._id;
         const _id = req.params.id
-        const resultData = await models.Result.findOneAndUpdate({ _id, isDeleted: true })
+        const resultData = await models.Result.findOneAndUpdate({ _id, isDeleted: false }, { isDeleted: true })
         res.status(200).send(resultData)
     } catch (e) {
         res.status(404).send(e.message)
