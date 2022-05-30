@@ -84,7 +84,7 @@ const getCountResult = async (req, res) => {
             console.log(resultData);
         } else {
             res.send(404).send("you are not authorizations")
-        }
+        } ``
 
     } catch (e) {
         res.status(404).send(e.message)
@@ -121,6 +121,7 @@ const updateResult = async (req, res) => {
         const arr1 = result.score
         const arr2 = req.body.score
 
+        //include Database
         function getDifference(array1, array2) {
             return array2.filter(object1 => {
                 return array1.some(object2 => {
@@ -129,7 +130,7 @@ const updateResult = async (req, res) => {
             });
         }
 
-        //database no hoy te
+        //database not includes
         function getDifferenceDa(array1, array2) {
             return array2.filter(object1 => {
                 return !array1.some(object2 => {
