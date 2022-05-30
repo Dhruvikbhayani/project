@@ -19,7 +19,7 @@ function calculate(data) {
         data.grade = "first class"
     } else if (data.result == 'pass' && percentage < 60 && percentage >= 50) {
         data.grade = "second class"
-    } else if (data.result == 'pass' && percentage > 50 && percentage <= 23) {
+    } else if (data.result == 'pass' && percentage < 50) {
         data.grade = "pass"
     } else if (data.result == 'fail') {
         data.grade = "fail"
