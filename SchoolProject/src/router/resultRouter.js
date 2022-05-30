@@ -14,5 +14,7 @@ router.route("/:id")
     .delete(auth, faculty, controller.resultController.removeResult)
 
 router.get('/:classId', auth, controller.resultController.getResult)
+router.get("/result/:classId", auth, controller.resultController.getCountResult)
+
 router.put('/updateResult/:id', auth, faculty, controller.resultController.updateResult)
 export default router

@@ -75,6 +75,24 @@ const getResult = async (req, res) => {
         res.status(404).send(e.message)
     }
 }
+
+const getCountResult = async (req, res) => {
+    try {
+        if (['faculty', 'student'].includes(req.user.roleId.roleName)) {
+            const _id = req.params.classId
+            const resultData = await models.Result.find({ classId: _id, isDeleted: false })
+            console.log(resultData);
+        } else {
+            res.send(404).send("you are not authorizations")
+        }
+
+    } catch (e) {
+        res.status(404).send(e.message)
+    }
+
+}
+
+
 const updateMarks = async (req, res) => {
     try {
         req.body.updatedBy = req.user._id
@@ -112,7 +130,7 @@ const updateResult = async (req, res) => {
         }
 
         //database no hoy te
-        function getDifferenceda(array1, array2) {
+        function getDifferenceDa(array1, array2) {
             return array2.filter(object1 => {
                 return !array1.some(object2 => {
                     return object1.subjectId.toString() == object2.subjectId;
@@ -121,7 +139,7 @@ const updateResult = async (req, res) => {
         }
 
         const NotMatchData = getDifference(arr1, arr2);
-        const MatchData = getDifferenceda(arr1, arr2);
+        const MatchData = getDifferenceDa(arr1, arr2);
 
         if (MatchData.length > 0) {
             await models.Result.findOneAndUpdate({ _id, isDeleted: false }, { $push: { score: MatchData } }, { new: true })
@@ -158,6 +176,6 @@ const removeResult = async (req, res) => {
     }
 }
 
-const resultController = { createResult, getResult, updateResult, getAllResult, updateMarks, removeResult }
+const resultController = { createResult, getResult, getCountResult, getAllResult, updateResult, updateMarks, removeResult }
 
 export default resultController
