@@ -9,6 +9,7 @@ import subjectRouter from './subjectRouter'
 import studentRouter from './studentRouter'
 import attendance from './Attendance'
 import result from './resultRouter'
+import book from './bookRouter'
 
 router.use("/user", userRouter)
 router.use("/subject", subjectRouter)
@@ -18,6 +19,7 @@ router.use("/student", studentRouter)
 router.use("/role", roleRouter)
 router.use("/attendance", attendance)
 router.use("/result", result)
+router.use("/book", book)
 
 
 export default router

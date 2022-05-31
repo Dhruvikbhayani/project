@@ -6,6 +6,7 @@ import studentController from './studentController'
 import subjectController from './subjectController'
 import AttendanceController from './attendanceController'
 import resultController from './resultController'
+import bookController from './bookController'
 
 export default {
     userController,
@@ -15,5 +16,6 @@ export default {
     studentController,
     subjectController,
     AttendanceController,
-    resultController
+    resultController,
+    bookController
 }

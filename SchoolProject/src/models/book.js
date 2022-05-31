@@ -11,6 +11,10 @@ const bookSchema = new mongoose.Schema({
     publisher: {
         type: String
     },
+    publishDate: {
+        type: String
+
+    },
     isActive: {
         type: Boolean,
         default: true
@@ -28,3 +32,6 @@ const bookSchema = new mongoose.Schema({
         ref: 'User'
     }
 })
+
+const Book = mongoose.model('Book', bookSchema)
+export default Book
