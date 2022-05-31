@@ -77,18 +77,31 @@ const getResult = async (req, res) => {
 
 const getCountResult = async (req, res) => {
     try {
-        if (['faculty', 'student'].includes(req.user.roleId.roleName)) {
-            const _id = req.params.classId
-            const resultData = await models.Result.find({ classId: _id, isDeleted: false })
-            console.log(resultData);
+        const _id = req.params.classId
+        const result = req.query.result
+        const resultData = await models.Result.find({ classId: _id, isDeleted: false }).count({ result: result })
+        if (!resultData) {
+            res.json(`Number of documents in the result is ${result}:` + resultData)
         } else {
-            res.send(404).send("you are not authorizations")
-        } ``
-
+            res.json(`Number of documents in the result is ${result}:` + resultData)
+        }
     } catch (e) {
         res.status(404).send(e.message)
     }
 
+}
+
+const getGradeResult = async (req, res) => {
+    try {
+
+        const _id = req.params.classId
+        const grade = req.query.grade
+        const resultData = await models.Result.find({ classId: _id, grade: grade, isDeleted: false })
+        res.send(resultData)
+
+    } catch (e) {
+        res.status(404).send(e.message)
+    }
 }
 
 
@@ -176,6 +189,6 @@ const removeResult = async (req, res) => {
     }
 }
 
-const resultController = { createResult, getResult, getCountResult, getAllResult, updateResult, updateMarks, removeResult }
+const resultController = { createResult, getResult, getGradeResult, getCountResult, getAllResult, updateResult, updateMarks, removeResult }
 
 export default resultController
