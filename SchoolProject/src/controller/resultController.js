@@ -28,6 +28,7 @@ function calculate(data) {
     return data
 }
 
+//Create result
 const createResult = async (req, res) => {
     try {
         req.body.createdBy = req.user._id
@@ -45,6 +46,7 @@ const createResult = async (req, res) => {
 
 }
 
+//Get result
 const getAllResult = async (req, res) => {
     try {
 
@@ -104,7 +106,19 @@ const getGradeResult = async (req, res) => {
     }
 }
 
+// const getSubject = async (req, res) => {
+//     try {
+//         const _id = req.params.subjectId
+//         // const resultData = await models.Subject.findOne({ _id: _id })
+//         const resultData = await models.Result.find({ "score.subjectId": _id, isDeleted: false })
+//         res.send(resultData)
+//         console.log(resultData);
+//     } catch (e) {
+//         res.status(404).send(e.message)
+//     }
+// }
 
+//update
 const updateMarks = async (req, res) => {
     try {
         req.body.updatedBy = req.user._id
@@ -178,6 +192,8 @@ const updateResult = async (req, res) => {
     }
 
 }
+
+//remove
 const removeResult = async (req, res) => {
     try {
         req.body.updatedBy = req.user._id;
@@ -189,6 +205,6 @@ const removeResult = async (req, res) => {
     }
 }
 
-const resultController = { createResult, getResult, getGradeResult, getCountResult, getAllResult, updateResult, updateMarks, removeResult }
+const resultController = { createResult, getResult, getGradeResult, getCountResult, getAllResult, getSubject, updateResult, updateMarks, removeResult }
 
 export default resultController
