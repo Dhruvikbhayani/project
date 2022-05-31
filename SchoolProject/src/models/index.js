@@ -5,6 +5,7 @@ import Subject from "./subject";
 import Attendance from "./Attendance";
 import Result from "./results";
 import Book from "./book";
+import BookIssuer from "./BookIssuer";
 
 export default {
     User,
@@ -13,5 +14,6 @@ export default {
     Subject,
     Attendance,
     Result,
-    Book
+    Book,
+    BookIssuer
 }

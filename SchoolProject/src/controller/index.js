@@ -7,6 +7,7 @@ import subjectController from './subjectController'
 import AttendanceController from './attendanceController'
 import resultController from './resultController'
 import bookController from './bookController'
+import BookIssuerController from './BookIssuerController'
 
 export default {
     userController,
@@ -17,5 +18,6 @@ export default {
     subjectController,
     AttendanceController,
     resultController,
-    bookController
+    bookController,
+    BookIssuerController
 }
