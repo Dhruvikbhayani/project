@@ -1,9 +1,15 @@
 import mongoose from "mongoose";
 
-const roleSchema = mongoose.Schema({
-    roleName: {
-        type: String,
-        enum: ['Admin', 'faculty', 'student', 'liberal']
+
+const bookSchema = new mongoose.Schema({
+    title: {
+        type: String
+    },
+    author: {
+        type: String
+    },
+    publisher: {
+        type: String
     },
     isActive: {
         type: Boolean,
@@ -21,7 +27,4 @@ const roleSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
-}, { timestamps: true })
-
-const Role = mongoose.model('Role', roleSchema)
-export default Role
+})

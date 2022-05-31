@@ -205,6 +205,6 @@ const removeResult = async (req, res) => {
     }
 }
 
-const resultController = { createResult, getResult, getGradeResult, getCountResult, getAllResult, getSubject, updateResult, updateMarks, removeResult }
+const resultController = { createResult, getResult, getGradeResult, getCountResult, getAllResult, updateResult, updateMarks, removeResult }
 
 export default resultController
