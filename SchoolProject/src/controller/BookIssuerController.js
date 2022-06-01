@@ -2,6 +2,14 @@ import models from "../models";
 import moment from "moment";
 
 
+const penaltyCount = (result) => {
+
+    const issueDate = moment(result.createdAt)
+    const actualReturnDate = moment(result.createdAt).add(result.returnDays, 'days')
+    const days = moment(result?.returnDate).diff(actualReturnDate, 'day')
+
+    return days
+}
 
 const createBookIssuer = async (req, res) => {
     try {
@@ -17,10 +25,19 @@ const createBookIssuer = async (req, res) => {
 
 const getAllBookIssuer = async (req, res) => {
     try {
-        const result = await models.BookIssuer.find({ isDeleted: false }).populate([{ path: 'bookId', select: 'title author' }, { path: 'studentId', select: 'firstName lastName' }])
-        res.send(result)
+        const result = await models.BookIssuer.find({ isDeleted: false })
+        result.map((element) => {
+            const days = penaltyCount(element)
+            if (days > 0) {
+                const penalty = days * 5
+                element.penalty = penalty
+                return element
+            }
+            return element
+        })
+        return res.send(result)
     } catch (e) {
-        res.status(404).send(e.message)
+        return res.send(e.message)
     }
 }
 
@@ -28,31 +45,30 @@ const getBookIssuer = async (req, res) => {
     try {
         const _id = req.params.id
         const result = await models.BookIssuer.findOne({ _id, isDeleted: false })
+        const days = penaltyCount(result)
+        if (days > 0) {
+            const penalty = days * 5
+            result.penalty = penalty
+        }
         res.status(200).send(result)
     } catch (e) {
         res.status(404).send(e.message)
     }
 }
 
+
 const updateBookIssuer = async (req, res) => {
     try {
         req.body.updatedBy = req.user._id
         const _id = req.params.id
         const result = await models.BookIssuer.findOne({ _id, isDeleted: false })
-
-        const issueDate = moment(result.createdAt)
-        const actualReturnDate = moment(result.createdAt).add(result.returnDays, 'days')
-        const days = moment(result?.returnDate).diff(actualReturnDate, 'day')
-        const penalty = days * result.penalty
-
-        if (moment(actualReturnDate).isBefore(result?.returnDate, 'days')) {
-            const result = await models.BookIssuer.findOneAndUpdate({ _id, isDeleted: false }, { ...req.body, penalty: penalty, isReturn: true }, { new: true })
+        const days = penaltyCount(result)
+        if (days > 0) {
+            const penalty = days * 5
+            const result = await models.BookIssuer.findOneAndUpdate({ _id, isDeleted: false }, { ...req.body, penalty: penalty, }, { new: true })
             res.status(200).send(result)
         }
-        if (moment(actualReturnDate).isSameOrAfter(result?.returnDate, 'days')) {
-            const result = await models.BookIssuer.findOneAndUpdate({ _id, isDeleted: false }, { isReturn: true }, { new: true })
-            res.status(200).send(result)
-        }
+        res.send(result)
     } catch (e) {
         res.status(404).send(e.message)
     }

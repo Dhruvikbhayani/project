@@ -27,7 +27,7 @@ const getAllFaculty = async (req, res) => {
         res.status(404).send(e.message)
     }
 }
-// 628b1714840b029d59e4dafc
+
 const getFaculty = async (req, res) => {
     try {
         const data = req.user
