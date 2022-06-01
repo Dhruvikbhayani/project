@@ -1,5 +1,6 @@
 import models from "../models";
 import moment from "moment";
+import async from "async";
 
 
 const penaltyCount = (result) => {
@@ -26,16 +27,19 @@ const createBookIssuer = async (req, res) => {
 const getAllBookIssuer = async (req, res) => {
     try {
         const result = await models.BookIssuer.find({ isDeleted: false })
-        result.map((element) => {
-            const days = penaltyCount(element)
+        const response = []
+        async.each(result, async (ele, callback) => {
+            const days = penaltyCount(ele)
             if (days > 0) {
                 const penalty = days * 5
-                element.penalty = penalty
-                return element
+                ele.penalty = penalty
             }
-            return element
+            response.push(ele)
+            if (callback) callback()
+        }, async (err) => {
+            console.log("response", response);
+            res.send(response)
         })
-        return res.send(result)
     } catch (e) {
         return res.send(e.message)
     }
