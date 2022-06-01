@@ -14,6 +14,9 @@ const bookIssuerSchema = new mongoose.Schema({
     returnDays: {
         type: Number
     },
+    returnDate: {
+        type: Date
+    },
     isReturn: {
         type: Boolean,
         default: false
