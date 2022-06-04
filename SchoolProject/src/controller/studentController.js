@@ -96,7 +96,6 @@ const updateStudent = async (req, res) => {
 
 const deleteStudent = async (req, res) => {
     try {
-
         const _id = req.params.id
         const result = await models.User.findOneAndUpdate({ _id, isDeleted: false }, { isDeleted: true }, { new: true })
         res.status(200).send(result)
